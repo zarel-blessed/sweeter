@@ -1,3 +1,5 @@
+/** @format */
+
 // Import Routes and Route from react-router-dom to setup routing
 import { Routes, Route } from "react-router-dom";
 
@@ -15,22 +17,22 @@ import LoginFrom from "./pages/_auth/forms/LoginForm";
 import { Home, NewsPage, ProfilePage } from "./pages/_root/root-pages";
 
 const App = () => {
-    return (
-        <Routes>
-            {/* Public Routes */}
-            <Route element={<AuthLayout />}>
-                <Route path="/sign-up" element={<SignupFrom />} />
-                <Route path="/log-in" element={<LoginFrom />} />
-            </Route>
+  return (
+    <Routes>
+      {/* Public Routes */}
+      <Route element={<AuthLayout />}>
+        <Route path='/sign-up' element={<SignupFrom />} />
+        <Route path='/log-in' element={<LoginFrom />} />
+      </Route>
 
-            {/* Private Routes */}
-            <Route element={<RootLayout />}>
-                <Route index element={<Home />} />
-                <Route path="/profile/:id" element={<ProfilePage />} />
-                <Route path="/news" element={<NewsPage />} />
-            </Route>
-        </Routes>
-    );
+      {/* Private Routes */}
+      <Route element={<RootLayout />}>
+        <Route index element={<Home />} />
+        <Route path='/profile/:id' element={<ProfilePage />} />
+        <Route path='/news' element={<NewsPage />} />
+      </Route>
+    </Routes>
+  );
 };
 
 export default App;

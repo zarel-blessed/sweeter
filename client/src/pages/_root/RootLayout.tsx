@@ -1,3 +1,5 @@
+/** @format */
+
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { BottomBar, LeftSidebar, RightSidebar } from "../../components";
 
@@ -8,39 +10,40 @@ import TweetBox from "../../components/ui/TweetBox";
 import Overlay from "../../components/Overlay";
 
 const RootLayout = () => {
-    const auth = useSelector((state: RootState) => state.auth);
-    const { pathname } = useLocation();
+  const auth = useSelector((state: RootState) => state.auth);
+  const { pathname } = useLocation();
 
-    const [isToggled, setIsToggled] = useState(false);
+  const [isToggled, setIsToggled] = useState(false);
 
-    return (
-        <main className="flex justify-center bg-dark_soul h-screen overflow-hidden">
-            {auth.isAuth ? (
-                <main className="flex w-[100%] max-w-[1400px]">
-                    <LeftSidebar setIsToggled={setIsToggled} />
-                    <section className="relative bg-pure_soul h-screen flex-1">
-                        <div className="top-left-curve">
-                            <h2 className="uppercase text-pure_soul">
-                                {pathname === "/"
-                                    ? "Home"
-                                    : pathname === "/profile/:id"
-                                    ? "Profile"
-                                    : "News"}
-                            </h2>
-                        </div>
+  return (
+    <main className='flex justify-center bg-dark_soul h-screen overflow-hidden'>
+      {auth.isAuth ? (
+        <main className='flex w-[100%] max-w-[1400px]'>
+          <LeftSidebar setIsToggled={setIsToggled} />
+          <section className='relative bg-pure_soul h-screen flex-1'>
+            <div
+              className='top-left-curve top-0'
+              style={{
+                display: pathname === `/profile/${auth?.user?.id}` ? "none" : "block",
+              }}
+            >
+              <h2 className='uppercase text-pure_soul'>
+                {pathname === "/" ? "Home" : pathname === "/news" ? `News` : "Other"}
+              </h2>
+            </div>
 
-                        <Outlet />
-                    </section>
-                    <RightSidebar />
-                    <BottomBar />
-                    {isToggled && <Overlay setIsToggled={setIsToggled} />}
-                    {isToggled && <TweetBox setIsToggled={setIsToggled} />}
-                </main>
-            ) : (
-                <Navigate to="/log-in" />
-            )}
+            <Outlet />
+          </section>
+          <RightSidebar />
+          <BottomBar />
+          {isToggled && <Overlay setIsToggled={setIsToggled} />}
+          {isToggled && <TweetBox setIsToggled={setIsToggled} />}
         </main>
-    );
+      ) : (
+        <Navigate to='/log-in' />
+      )}
+    </main>
+  );
 };
 
 export default RootLayout;

@@ -1,3 +1,5 @@
+/** @format */
+
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
@@ -5,66 +7,78 @@
 @tailwind utilities;
 
 :root {
-    --clr-dark--soul: hsl(0, 0%, 3%);
-    --clr-pure--soul: hsl(0, 0%, 85%);
+  --clr-dark--soul: hsl(0, 0%, 3%);
+  --clr-pure--soul: hsl(0, 0%, 85%);
 
-    --clr-essence--01: hsl(306, 91%, 60%);
-    --clr-essence--02: hsl(228, 55%, 54%);
-    --clr-essence--02__dark: hsl(234, 61%, 50%);
+  --clr-essence--01: hsl(306, 48%, 54%);
+  --clr-essence--02: hsl(228, 55%, 54%);
+  --clr-essence--02__dark: hsl(229, 60%, 46%);
 }
 
 * {
-    font-family: "Inter", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 img {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-    width: 3px;
+  width: 3px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-    background-color: var(--clr-pure--soul);
+  background-color: var(--clr-pure--soul);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: var(--clr-essence--02);
+  background-color: var(--clr-essence--02);
 }
 
 @layer components {
-    .primary-button {
-        @apply py-2 px-28 bg-essence02 hover:bg-essence02_dark text-sm font-semibold uppercase text-pure_soul rounded-[30px] transition duration-300;
-    }
+  .primary-button {
+    @apply py-2 px-28 bg-essence02 hover:bg-essence02_dark text-sm font-semibold uppercase text-pure_soul rounded-[30px] transition duration-300 border-2 border-essence02 hover:border-essence02_dark;
+  }
 
-    .input-container {
-        @apply inline-flex items-center gap-4 px-4 w-full  bg-white border-2 border-essence02 rounded-[30px];
-    }
+  .input-container {
+    @apply inline-flex items-center gap-4 px-4 w-full  bg-white border-2 border-essence02 rounded-[30px];
+  }
 
-    .input-field {
-        @apply flex-grow p-3  font-medium  text-sm  text-slate-600 outline-none placeholder:text-xs placeholder:uppercase  placeholder:text-slate-600;
-    }
+  .input-field {
+    @apply flex-grow p-3  font-medium  text-sm  text-slate-600 outline-none placeholder:text-xs placeholder:uppercase  placeholder:text-slate-600;
+  }
 
-    .top-left-curve {
-        @apply flex items-center justify-center absolute top-[20px]  md:top-0 left-0  py-3  px-6  h-[56px]  bg-dark_soul  w-[320px]  rounded-tr-[30px]  rounded-br-[30px] z-30;
-    }
+  .left-sidebar {
+    @apply hidden sm:block bg-dark_soul h-screen relative w-[200px] md:w-[280px] xl:w-[360px] border-l-2 border-slate-900;
+  }
 
-    .tossy-curve {
-        @apply flex items-center justify-center absolute bottom-[20px] md:bottom-[34px] right-0 py-3 px-6 h-[56px]  bg-dark_soul w-[320px] rounded-tl-[30px] rounded-bl-[30px] z-30;
-    }
+  .left-sidebar-page-link {
+    @apply flex gap-10 items-center justify-center md:justify-start px-4 py-2 rounded-md transition duration-300 hover:sm:bg-neutral-900;
+  }
 
-    .auth-layout-right {
-        @apply flex md:pt-[85px] items-center md:items-start xl:items-center xl:pt-0 justify-center relative w-full md:w-[50%] h-screen;
-    }
+  .left-sidebar-profile-container {
+    @apply flex flex-col md:flex-row items-center justify-center gap-6 p-6 border-b-2 border-b-essence01;
+  }
 
-    .multiline-input {
-        @apply w-full outline-none bg-[#050505] py-2 px-4 rounded-md text-slate-500 placeholder:text-slate-500 font-medium resize-none h-[140px] border-2 border-slate-800;
-    }
+  .top-left-curve {
+    @apply flex items-center justify-center absolute top-[20px]  md:top-0 left-0  py-3  px-6  h-[56px]  bg-dark_soul  w-[320px]  rounded-tr-[30px]  rounded-br-[30px] z-30;
+  }
+
+  .tossy-curve {
+    @apply flex items-center justify-center absolute bottom-[20px] md:bottom-[34px] right-0 py-3 px-6 h-[56px]  bg-dark_soul w-[320px] rounded-tl-[30px] rounded-bl-[30px] z-30;
+  }
+
+  .auth-layout-right {
+    @apply flex md:pt-[85px] items-center md:items-start xl:items-center xl:pt-0 justify-center relative w-full md:w-[50%] h-screen;
+  }
+
+  .multiline-input {
+    @apply w-full outline-none bg-[#050505] py-2 px-4 rounded-md text-slate-500 placeholder:text-slate-500 font-medium resize-none h-[140px] border-2 border-slate-800;
+  }
 }
