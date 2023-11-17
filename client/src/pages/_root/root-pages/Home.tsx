@@ -4,14 +4,14 @@ import {
   InvalidateQueryFilters,
   useQueryClient,
   useMutation,
-  useQuery,
 } from "@tanstack/react-query";
-import { Tweet } from "../../../interfaces/interface";
 import { ToastContainer } from "react-toastify";
 import TweetCard from "../../../components/ui/TweetCard";
 import { ColorRing } from "react-loader-spinner";
 import { deleteTweet, fetchAllTweets } from "../../../functions/tweet-functions";
 import { showToast } from "../../../utils";
+import { useQuery } from "@tanstack/react-query";
+import { Tweet } from "../../../interfaces/interface";
 
 interface Data {
   tweets?: Tweet[];
@@ -66,12 +66,17 @@ const Home = () => {
           />
         </div>
       ) : (
-        <div className='flex flex-col max-w-[500px]'>
+        <div className='flex flex-col gap-6 max-w-[500px]'>
           {data?.tweets?.map((tweet: any, idx: number) =>
             isLoading ? (
               <p>Loading...</p>
             ) : (
-              <TweetCard key={idx} tweet={tweet} deleteMutate={deleteMutate} />
+              <TweetCard
+                key={idx}
+                tweet={tweet}
+                deleteMutate={deleteMutate}
+                isQuery={true}
+              />
             )
           )}
         </div>

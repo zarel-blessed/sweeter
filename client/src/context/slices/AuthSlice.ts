@@ -7,6 +7,7 @@ interface User {
   name: string;
   username: string;
   profilePicture: string;
+  bannerImage: string;
 }
 
 interface AuthState {

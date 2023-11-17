@@ -11,11 +11,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { createTweet } from "../../functions/tweet-functions";
-
-export interface Image {
-  preview: any;
-  data: any;
-}
+import { Image, handleFileSelect } from "../../functions/image-functions";
 
 const TweetBox = ({
   setIsToggled,
@@ -26,7 +22,7 @@ const TweetBox = ({
   const QueryClient = useQueryClient();
 
   const [content, setContent] = useState("");
-  const [image, setImage] = useState<Image>({ preview: "", data: "" });
+  const [image, setImage] = useState<Image>({ preview: "", data: null });
 
   const createTweetMutation = useMutation({
     mutationFn: createTweet,
@@ -35,19 +31,8 @@ const TweetBox = ({
     },
   });
 
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length) {
-      const img = {
-        preview: URL.createObjectURL(event.target.files[0]),
-        data: event.target.files[0],
-      };
-
-      setImage(img);
-    }
-  };
-
   return (
-    <article className='absolute left-1/2 top-[48%] translate-x-[-50%] translate-y-[-50%] bg-dark_soul p-6 rounded-lg'>
+    <article className='fixed left-1/2 top-[48%] translate-x-[-50%] translate-y-[-50%] bg-dark_soul p-6 rounded-lg'>
       <div className='flex gap-4'>
         <img
           src={auth?.user?.profilePicture || "/assets/profile-fallback.png"}
@@ -72,8 +57,8 @@ const TweetBox = ({
             name='filename'
             hidden
             type='file'
-            accept='.png,.jpg,.gif,.jpeg'
-            onChange={handleFileSelect}
+            accept='.png,.jpg,.jpeg'
+            onChange={(e) => handleFileSelect(e, setImage)}
           />
           <label htmlFor='file'>
             <FaImage className='text-slate-700 cursor-pointer' />

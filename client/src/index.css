@@ -7,7 +7,7 @@
 @tailwind utilities;
 
 :root {
-  --clr-dark--soul: hsl(0, 0%, 3%);
+  --clr-dark--soul: hsl(0, 0%, 2%);
   --clr-pure--soul: hsl(0, 0%, 85%);
 
   --clr-essence--01: hsl(306, 48%, 54%);
@@ -55,7 +55,7 @@ img {
   }
 
   .left-sidebar {
-    @apply hidden sm:block bg-dark_soul h-screen relative w-[200px] md:w-[280px] xl:w-[360px] border-l-2 border-slate-900;
+    @apply hidden sm:block bg-dark_soul h-screen relative w-[200px] md:w-[280px] xl:w-[360px] border-x-2 border-slate-900;
   }
 
   .left-sidebar-page-link {

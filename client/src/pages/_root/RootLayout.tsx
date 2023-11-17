@@ -11,6 +11,7 @@ import Overlay from "../../components/Overlay";
 
 const RootLayout = () => {
   const auth = useSelector((state: RootState) => state.auth);
+  const [sidebarProfile, setSidebarProfile] = useState(auth?.user?.profilePicture || "");
   const { pathname } = useLocation();
 
   const [isToggled, setIsToggled] = useState(false);
@@ -19,7 +20,7 @@ const RootLayout = () => {
     <main className='flex justify-center bg-dark_soul h-screen overflow-hidden'>
       {auth.isAuth ? (
         <main className='flex w-[100%] max-w-[1400px]'>
-          <LeftSidebar setIsToggled={setIsToggled} />
+          <LeftSidebar sidebarProfile={sidebarProfile} setIsToggled={setIsToggled} />
           <section className='relative bg-pure_soul h-screen flex-1'>
             <div
               className='top-left-curve top-0'
@@ -32,7 +33,7 @@ const RootLayout = () => {
               </h2>
             </div>
 
-            <Outlet />
+            <Outlet context={[setSidebarProfile]} />
           </section>
           <RightSidebar />
           <BottomBar />

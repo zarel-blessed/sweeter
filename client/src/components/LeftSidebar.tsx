@@ -8,13 +8,15 @@ import { logout } from "../context/slices/AuthSlice";
 import { showToast } from "../utils";
 
 const LeftSidebar = ({
+  sidebarProfile,
   setIsToggled,
 }: {
+  sidebarProfile: string;
   setIsToggled: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const auth = useSelector((state: RootState) => state.auth);
-
   const dispatch: AppDispatch = useDispatch();
+
   const { pathname } = useLocation();
 
   const handleLogout = () => {
@@ -43,15 +45,7 @@ const LeftSidebar = ({
               >
                 <FaHome className='text-lg text-pure_soul' />
               </div>
-              <p
-                className='hidden md:block uppercase text-sm text-pure_soul'
-                // style={{
-                //   color:
-                //     pathname === "/" ? "var(--clr-essence--02)" : "var(--clr-pure--soul)",
-                // }}
-              >
-                Home
-              </p>
+              <p className='hidden md:block uppercase text-sm text-pure_soul'>Home</p>
             </Link>
           </li>
           <li className='w-[80%] xl:w-[70%]'>
@@ -59,25 +53,14 @@ const LeftSidebar = ({
               <div
                 className='p-3 rounded-full transition duration-300'
                 style={{
-                  backgroundColor:
-                    pathname === `/profile/${auth?.user?.id}`
-                      ? "var(--clr-essence--01)"
-                      : "#333",
+                  backgroundColor: pathname.split("/").includes("profile")
+                    ? "var(--clr-essence--01)"
+                    : "#333",
                 }}
               >
                 <FaUser className='text-lg text-pure_soul' />
               </div>
-              <p
-                className='hidden md:block uppercase text-sm text-pure_soul'
-                // style={{
-                //   color:
-                //     pathname === `/profile/${auth?.user?.id}`
-                //       ? "var(--clr-essence--02)"
-                //       : "var(--clr-pure--soul)",
-                // }}
-              >
-                Profile
-              </p>
+              <p className='hidden md:block uppercase text-sm text-pure_soul'>Profile</p>
             </Link>
           </li>
           <li
@@ -100,17 +83,7 @@ const LeftSidebar = ({
               >
                 <FaNewspaper className='text-lg text-pure_soul' />
               </div>
-              <p
-                className='hidden md:block uppercase text-sm text-pure_soul'
-                // style={{
-                //   color:
-                //     pathname === "/news"
-                //       ? "var(--clr-essence--02)"
-                //       : "var(--clr-pure--soul)",
-                // }}
-              >
-                News
-              </p>
+              <p className='hidden md:block uppercase text-sm text-pure_soul'>News</p>
             </Link>
           </li>
         </ul>
@@ -119,7 +92,7 @@ const LeftSidebar = ({
       <div className='absolute bottom-0 left-0 right-0'>
         <div className='left-sidebar-profile-container'>
           <img
-            src={auth?.user?.profilePicture || "/assets/profile-fallback.png"}
+            src={sidebarProfile || "/assets/profile-fallback.png"}
             className='w-[45px] h-[45px] object-cover rounded-full'
           />
           <div>

@@ -6,13 +6,19 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../context/store";
 import { fetcherClient, showToast } from "../../utils";
 import { useState } from "react";
+import { deleteTweet } from "../../functions/tweet-functions";
+import { Link } from "react-router-dom";
 
 const TweetCard = ({
   tweet,
   deleteMutate,
+  isQuery,
+  setTweets,
 }: {
   tweet: Tweet;
-  deleteMutate: (tweet_id: any) => void;
+  deleteMutate?: (tweet_id: any) => void;
+  isQuery: boolean;
+  setTweets?: React.Dispatch<React.SetStateAction<Tweet[]>>;
 }) => {
   const auth = useSelector((state: RootState) => state.auth);
 
@@ -62,20 +68,22 @@ const TweetCard = ({
   };
 
   return (
-    <article className='mb-6 p-6 border border-slate-400 rounded-lg max-w-[500px]'>
+    <article className='p-6 border border-slate-400 rounded-lg'>
       <div className='flex items-start justify-between'>
         <div className='flex gap-4 mb-4'>
-          <img
-            src={tweet.tweetedBy.profilePicture || "/assets/profile-fallback.png"}
-            className='w-[40px] h-[40px] rounded-full border-2 object-cover border-slate-400'
-          />
+          <Link to={`/profile/${tweet.tweetedBy._id}`} className='flex gap-4'>
+            <img
+              src={tweet.tweetedBy.profilePicture || "/assets/profile-fallback.png"}
+              className='w-[40px] h-[40px] rounded-full border-2 object-cover border-slate-400'
+            />
 
-          <div className='flex flex-col'>
-            <span className='leading-[1] uppercase text-xs sm:text-sm font-semibold text-slate-800'>
-              {tweet.tweetedBy?.name}
-            </span>
-            <span className='text-sm text-slate-700'>@{tweet.tweetedBy?.username}</span>
-          </div>
+            <div className='flex flex-col'>
+              <span className='leading-[1] uppercase text-xs sm:text-sm font-semibold text-slate-800'>
+                {tweet.tweetedBy?.name}
+              </span>
+              <span className='text-sm text-slate-700'>@{tweet.tweetedBy?.username}</span>
+            </div>
+          </Link>
 
           <div className='text-xs sm:text-sm text-slate-800 font-medium'>12 Nov 2023</div>
         </div>
@@ -84,7 +92,8 @@ const TweetCard = ({
           <FaTrash
             className='text-gray-500 cursor-pointer'
             onClick={() => {
-              deleteMutate(tweet?._id);
+              if (isQuery && deleteMutate) deleteMutate(tweet?._id);
+              if (!isQuery) deleteTweet(tweet?._id, setTweets);
             }}
           />
         )}

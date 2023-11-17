@@ -1,13 +1,15 @@
+/** @format */
+
 const express = require("express");
 const {
-    uploadTweet,
-    likeTweet,
-    dislikeTweet,
-    replyOnTweet,
-    getTweetDetails,
-    getAllTweets,
-    deleteTweet,
-    retweetTweet,
+  uploadTweet,
+  likeTweet,
+  dislikeTweet,
+  replyOnTweet,
+  getTweetDetails,
+  getAllTweets,
+  deleteTweet,
+  retweetTweet,
 } = require("../actions/tweet.actions");
 const verifyAccess = require("../middleware/auth.middleware");
 const router = express.Router();

@@ -1,3 +1,5 @@
+/** @format */
+
 // Import the Express framework for building web applications
 const express = require("express");
 
@@ -6,12 +8,13 @@ const verifyAccess = require("../middleware/auth.middleware");
 
 // Import various user-related actions from the user.actions module
 const {
-    getUserData,
-    followUser,
-    unfollowUser,
-    updateUser,
-    getAllTweets,
-    uploadProfilePic,
+  getUserData,
+  followUser,
+  unfollowUser,
+  updateUser,
+  getAllTweets,
+  uploadProfilePic,
+  uploadBannerImage,
 } = require("../actions/user.actions");
 
 // Create an Express Router to handle user-related routes
@@ -25,6 +28,7 @@ router.post("/:id/unfollow", verifyAccess, unfollowUser);
 router.put("/:id", verifyAccess, updateUser);
 router.get("/:id/tweets", verifyAccess, getAllTweets);
 router.post("/:id/uploadProfilePic", verifyAccess, uploadProfilePic);
+router.post("/:id/uploadBannerImage", verifyAccess, uploadBannerImage);
 
 // Export the router to make it available for use in other files
 module.exports = router;
