@@ -53,9 +53,10 @@ const LeftSidebar = ({
               <div
                 className='p-3 rounded-full transition duration-300'
                 style={{
-                  backgroundColor: pathname.split("/").includes("profile")
-                    ? "var(--clr-essence--01)"
-                    : "#333",
+                  backgroundColor:
+                    pathname === `/profile/${auth?.user?.id}`
+                      ? "var(--clr-essence--01)"
+                      : "#333",
                 }}
               >
                 <FaUser className='text-lg text-pure_soul' />

@@ -26,13 +26,7 @@ export const fetchAllTweets = async () => {
   }
 };
 
-export const createTweet = async ({
-  content,
-  image,
-}: {
-  content: string;
-  image?: any;
-}) => {
+export const createTweet = async (content: string, image?: any) => {
   try {
     const accessToken = localStorage.getItem("accessToken");
 
@@ -68,6 +62,31 @@ export const createTweet = async ({
   } catch (error: any) {
     if (error?.response?.status === 400) {
       showToast("You can't tweet that", "error");
+    } else showToast("Something went wrong!", "error");
+  }
+};
+
+export const replyTweet = async (content: string, id: Tweet) => {
+  try {
+    const accessToken = localStorage.getItem("accessToken");
+
+    const headers = {
+      "Content-Type": "application/json",
+      "x-auth-token": `Bearer ${accessToken}`,
+    };
+
+    await fetcherClient.post(
+      `/tweet/${id}/reply`,
+      JSON.stringify({
+        content,
+      }),
+      {
+        headers,
+      }
+    );
+  } catch (error: any) {
+    if (error?.response?.status === 400) {
+      showToast("You can't reply that", "error");
     } else showToast("Something went wrong!", "error");
   }
 };

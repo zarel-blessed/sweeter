@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const TweetSchema = new mongoose.Schema(
   {
+    parentId: { type: String, default: null },
     content: { type: String, required: true },
     image: { type: String },
     tweetedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

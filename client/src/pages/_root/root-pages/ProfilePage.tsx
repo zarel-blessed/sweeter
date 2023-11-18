@@ -19,10 +19,14 @@ import { ColorRing } from "react-loader-spinner";
 const ProfilePage = () => {
   const { id } = useParams();
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["user"],
     queryFn: () => getUserData(id),
   });
+
+  useEffect(() => {
+    refetch();
+  }, [id]);
 
   const { data: tweets, isLoading, setData: setTweets } = useFetcherClient();
 
@@ -45,21 +49,26 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (data?.bannerImage) {
-      setBackgroundStyle({
-        ...backgroundStyle,
-        backgroundImage:
-          data?.bannerImage && data?.bannerImage != "" ? `url(${data.bannerImage})` : "",
-      });
+      setBackgroundStyle((prevStyle) => ({
+        ...prevStyle,
+        backgroundImage: `url(${data.bannerImage})`,
+      }));
+    } else {
+      setBackgroundStyle((prevStyle) => ({
+        ...prevStyle,
+        backgroundImage: "",
+      }));
     }
-  }, [data]);
+  }, [data?.bannerImage]);
 
   return (
-    <main className='h-[100vh] overflow-y-auto custom-scrollbar'>
+    <main className='h-[100vh] overflow-y-auto custom-scrollbar max-w-[580px] mx-auto'>
       <header className='flex justify-between items-center bg-pure_soul py-4 px-6'>
         <div className='flex flex-col'>
-          <span className='leading-[1] font-bold text-dark_soul'>{auth?.user?.name}</span>
+          <span className='leading-[1] font-bold text-dark_soul'>{data?.name}</span>
           <span className='text-sm font-medium text-slate-700'>
-            {data?.followers?.length} Followers
+            {tweets?.filter((tweet: Tweet) => tweet?.tweetedBy?._id == data?._id).length}{" "}
+            posts
           </span>
         </div>
       </header>
@@ -95,13 +104,15 @@ const ProfilePage = () => {
             <div className='grid place-items-center border-2 border-essence02 w-[40px] h-[40px] rounded-full'>
               <FaEnvelope className='text-essence02' />
             </div>
-            <button className='primary-button px-6'>Edit details</button>
+            {auth?.user?.id === data?._id && (
+              <button className='primary-button px-6'>Edit details</button>
+            )}
           </div>
         </div>
 
         <div className='flex flex-col mt-8 py-4 px-6'>
           <span className='leading-[1.1] font-bold text-dark_soul'>{data?.name}</span>
-          <span className='text-sm font-medium text-slate-700'>{data?.username}</span>
+          <span className='text-sm font-medium text-slate-700'>@{data?.username}</span>
         </div>
 
         <p className='py-2 px-6 font-medium text-dark_soul text-sm'>

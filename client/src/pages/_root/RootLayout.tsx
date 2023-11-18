@@ -25,7 +25,7 @@ const RootLayout = () => {
             <div
               className='top-left-curve top-0'
               style={{
-                display: pathname === `/profile/${auth?.user?.id}` ? "none" : "block",
+                display: pathname === "/" ? "block" : "none",
               }}
             >
               <h2 className='uppercase text-pure_soul'>

@@ -67,18 +67,20 @@ const Home = () => {
         </div>
       ) : (
         <div className='flex flex-col gap-6 max-w-[500px]'>
-          {data?.tweets?.map((tweet: any, idx: number) =>
-            isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <TweetCard
-                key={idx}
-                tweet={tweet}
-                deleteMutate={deleteMutate}
-                isQuery={true}
-              />
-            )
-          )}
+          {data?.tweets
+            ?.filter((tweet) => tweet?.parentId == null || tweet?.parentId == undefined)
+            ?.map((tweet: any, idx: number) =>
+              isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <TweetCard
+                  key={idx}
+                  tweet={tweet}
+                  deleteMutate={deleteMutate}
+                  isQuery={true}
+                />
+              )
+            )}
         </div>
       )}
 

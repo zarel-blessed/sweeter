@@ -118,7 +118,7 @@ const dislikeTweet = async (req, res) => {
   }
 };
 
-const replyOnTweet = async () => {
+const replyOnTweet = async (req, res) => {
   const { id } = req.params;
   const { content } = req.body;
 
@@ -128,6 +128,7 @@ const replyOnTweet = async () => {
 
   try {
     const newReplyTweet = await new Tweet({
+      parentId: id,
       content,
       tweetedBy: req._id,
     });
@@ -137,8 +138,6 @@ const replyOnTweet = async () => {
     const tweet = await Tweet.findByIdAndUpdate(id, {
       $push: { replies: newReplyTweet._id },
     });
-
-    await tweet.save();
 
     res.json({ message: "New reply added!" });
   } catch (error) {
@@ -151,11 +150,11 @@ const replyOnTweet = async () => {
   }
 };
 
-const getTweetDetails = (req, res) => {
+const getTweetDetails = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const tweet = Tweet.findById(id)
+    const tweet = await Tweet.findById(id)
       ?.populate({
         path: "tweetedBy",
         select: "-password",
@@ -177,6 +176,10 @@ const getTweetDetails = (req, res) => {
         select: "-password",
       })
       .exec();
+
+    if (!tweet) {
+      return res.status(404).json({ message: "Tweet not found!" });
+    }
 
     res.json({ tweet });
   } catch (error) {

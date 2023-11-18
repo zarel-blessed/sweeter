@@ -19,7 +19,6 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const getUserData = async (req, res) => {
   // Extract the user ID from the request parameters
   const { id } = req.params;
-  console.log(req);
 
   try {
     // Connect to MongoDB

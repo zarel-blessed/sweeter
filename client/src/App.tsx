@@ -15,6 +15,7 @@ import LoginFrom from "./pages/_auth/forms/LoginForm";
 
 // Private pages
 import { Home, NewsPage, ProfilePage } from "./pages/_root/root-pages";
+import TweetDetails from "./pages/_root/root-pages/TweetDetails";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
       <Route element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path='/profile/:id' element={<ProfilePage />} />
+        <Route path='/tweet/:id' element={<TweetDetails />} />
         <Route path='/news' element={<NewsPage />} />
       </Route>
     </Routes>
