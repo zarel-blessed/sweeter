@@ -8,7 +8,10 @@ const Overlay = ({
   return (
     <div
       className='fixed inset-0 bg-black/50'
-      onClick={() => setIsToggled((prev) => !prev)}
+      onClick={(event) => {
+        setIsToggled((prev) => !prev);
+        event?.stopPropagation();
+      }}
     ></div>
   );
 };

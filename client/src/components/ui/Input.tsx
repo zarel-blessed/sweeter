@@ -54,7 +54,11 @@ export const MultiLineInput = ({
         required={required}
         className='multiline-input'
         value={value}
-        onChange={(e) => changeHandler(e.target.value)}
+        onChange={(e) => {
+          changeHandler(e.target.value);
+          e.stopPropagation();
+        }}
+        onClick={(e) => e.preventDefault()}
       />
     </div>
   );

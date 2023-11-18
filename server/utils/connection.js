@@ -1,3 +1,5 @@
+/** @format */
+
 // Import the Mongoose library for MongoDB interactions
 const mongoose = require("mongoose");
 
@@ -10,23 +12,22 @@ let isConnected = false;
  * @param {string} url - The MongoDB connection URL.
  */
 const connectToMongoDB = async (url) => {
-    try {
-        // Check if not already connected
-        if (!isConnected) {
-            // Attempt to connect to MongoDB
-            await mongoose.connect(url);
+  try {
+    // Check if not already connected
+    if (!isConnected) {
+      // Attempt to connect to MongoDB
+      await mongoose.connect(url);
 
-            // Update connection status and log success
-            isConnected = true;
-            console.log("Connected to MongoDB");
-        } else {
-            // Log a message if already connected
-            console.log("Already connected to MongoDB");
-        }
-    } catch (error) {
-        // Handle connection errors and log the details
-        console.error(`Error while connecting to MongoDB: ${error.message}`);
+      // Update connection status and log success
+      isConnected = true;
+      console.log("Connected to MongoDB");
+    } else {
+      return;
     }
+  } catch (error) {
+    // Handle connection errors and log the details
+    console.error(`Error while connecting to MongoDB: ${error.message}`);
+  }
 };
 
 // Export the connectToMongoDB function to make it available for use in other files

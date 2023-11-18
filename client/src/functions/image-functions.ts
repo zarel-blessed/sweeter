@@ -14,7 +14,7 @@ export interface Image {
 
 export const handleFileSelect = (
   event: React.ChangeEvent<HTMLInputElement>,
-  setterFunction: React.Dispatch<React.SetStateAction<Image>>
+  setterFunction: React.Dispatch<React.SetStateAction<Image | null>>
 ) => {
   if (event.target.files && event.target.files.length) {
     const img = {

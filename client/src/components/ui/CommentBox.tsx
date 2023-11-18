@@ -26,7 +26,10 @@ const CommentBox = ({
   };
 
   return (
-    <article className='fixed left-1/2 top-[48%] translate-x-[-50%] translate-y-[-50%] bg-dark_soul p-6 rounded-lg'>
+    <article
+      className='fixed left-1/2 top-[48%] translate-x-[-50%] translate-y-[-50%] bg-dark_soul p-6 rounded-lg'
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className='flex gap-4'>
         <img
           src={auth?.user?.profilePicture || "/assets/profile-fallback.png"}

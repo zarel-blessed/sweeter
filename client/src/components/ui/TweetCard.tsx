@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CommentBox from "./CommentBox";
 import Overlay from "../Overlay";
 import formatDate from "../../utils/formatDate";
+import { ToastContainer } from "react-toastify";
 
 const TweetCard = ({
   tweet,
@@ -75,12 +76,20 @@ const TweetCard = ({
 
   return (
     <article
-      className='p-6 border border-slate-400 rounded-lg'
-      onClick={() => navigate(`/tweet/${tweet._id}`)}
+      className='p-6 border border-slate-400 rounded-lg hover:bg-zinc-500/[0.15] transition duration-300'
+      onClick={() => {
+        navigate(`/tweet/${tweet._id}`);
+      }}
     >
       <div className='flex items-start justify-between'>
         <div className='flex gap-4 mb-4'>
-          <Link to={`/profile/${tweet.tweetedBy._id}`} className='flex gap-4'>
+          <Link
+            to={`/profile/${tweet.tweetedBy._id}`}
+            className='flex gap-4'
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <img
               src={tweet.tweetedBy.profilePicture || "/assets/profile-fallback.png"}
               className='w-[40px] h-[40px] rounded-full border-2 object-cover border-slate-400'
@@ -102,9 +111,13 @@ const TweetCard = ({
         {byUser(auth?.user?.id, tweet?.tweetedBy?._id) && (
           <FaTrash
             className='text-gray-500 cursor-pointer'
-            onClick={() => {
+            onClick={(event: React.MouseEvent) => {
               if (isQuery && deleteMutate) deleteMutate(tweet?._id);
-              if (!isQuery) deleteTweet(tweet?._id, setTweets);
+              if (!isQuery) {
+                deleteTweet(tweet?._id, setTweets);
+                if (!setTweets) navigate("/");
+              }
+              event?.stopPropagation();
             }}
           />
         )}
@@ -129,13 +142,18 @@ const TweetCard = ({
       )}
 
       <div className='flex gap-6'>
-        <div className='flex items-center gap-2 group cursor-pointer'>
+        <div
+          className='flex items-center gap-2 group cursor-pointer'
+          onClick={(event: React.MouseEvent) => {
+            handleLike(tweet?._id);
+            event.stopPropagation();
+          }}
+        >
           <FaHeart
             className='text-gray-500 transition duration-500 group-hover:sm:text-red-500'
             style={{
               color: isLiked ? "#f33434" : "#777",
             }}
-            onClick={() => handleLike(tweet?._id)}
           />
           <span className='font-medium text-slate-700 group-hover:sm:text-red-500'>
             {likeCount}
@@ -144,7 +162,10 @@ const TweetCard = ({
 
         <div
           className='flex items-center gap-2 group cursor-pointer'
-          onClick={() => setIsCommentBoxToggled((prev) => !prev)}
+          onClick={(event: React.MouseEvent) => {
+            setIsCommentBoxToggled((prev) => !prev);
+            event.stopPropagation();
+          }}
         >
           <FaComment className='text-gray-500 group-hover:sm:text-blue-500' />
           <span className='font-medium text-slate-700 group-hover:sm:text-blue-500'>
@@ -165,6 +186,8 @@ const TweetCard = ({
       {isCommentBoxToggled && (
         <CommentBox id={tweet._id} setIsToggled={setIsCommentBoxToggled} />
       )}
+
+      <ToastContainer />
     </article>
   );
 };

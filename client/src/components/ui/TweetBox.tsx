@@ -22,10 +22,10 @@ const TweetBox = ({
   const QueryClient = useQueryClient();
 
   const [content, setContent] = useState("");
-  const [image, setImage] = useState<Image>({ preview: "", data: null });
+  const [image, setImage] = useState<Image | null>(null);
 
   const createTweetMutation = useMutation({
-    mutationFn: createTweet,
+    mutationFn: () => createTweet(content, image),
     onSuccess: () => {
       QueryClient.invalidateQueries(["tweets"] as InvalidateQueryFilters);
     },
@@ -44,7 +44,7 @@ const TweetBox = ({
           changeHandler={setContent}
         />
       </div>
-      {image.preview && (
+      {image?.preview && (
         <img
           src={image.preview}
           className='ml-14 my-2 h-[200px] object-cover rounded-md'
@@ -69,7 +69,7 @@ const TweetBox = ({
         <button
           className='primary-button px-8'
           onClick={() => {
-            createTweetMutation.mutate({ content, image });
+            createTweetMutation.mutate();
             setContent("");
             setIsToggled((prev) => !prev);
           }}

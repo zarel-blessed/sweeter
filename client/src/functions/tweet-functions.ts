@@ -35,7 +35,7 @@ export const createTweet = async (content: string, image?: any) => {
       "x-auth-token": `Bearer ${accessToken}`,
     };
 
-    if (image?.data != "" && image?.preview != "") {
+    if (image) {
       const ImageResponse = await handleImageUpload(image);
 
       await fetcherClient.post(
@@ -62,7 +62,7 @@ export const createTweet = async (content: string, image?: any) => {
   } catch (error: any) {
     if (error?.response?.status === 400) {
       showToast("You can't tweet that", "error");
-    } else showToast("Something went wrong!", "error");
+    } else showToast(`${error.message}`, "error");
   }
 };
 
@@ -106,7 +106,7 @@ export const deleteTweet = async (
     if (setTweets)
       setTweets((prev) => [...prev.filter((tweet: Tweet) => tweet._id != tweet_id)]);
 
-    fetcherClient.delete(`/tweet/${tweet_id}`, { headers });
+    await fetcherClient.delete(`/tweet/${tweet_id}`, { headers });
   } catch (error) {
     showToast("Can't delete the Tweet!", "error", 3000);
   }

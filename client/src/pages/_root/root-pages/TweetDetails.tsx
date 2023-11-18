@@ -11,7 +11,7 @@ const TweetDetails = () => {
   const { id } = useParams();
   const [tweetDetails, settweetDetails] = useState<any>(null);
 
-  useEffect(() => {
+  const fetchDetails = () => {
     const accessToken = localStorage.getItem("accessToken");
 
     const headers = {
@@ -24,11 +24,15 @@ const TweetDetails = () => {
         headers,
       })
       .then((response) => settweetDetails(response?.data?.tweet));
-  }, [id, tweetDetails?.replies]);
+  };
+
+  useEffect(() => {
+    fetchDetails();
+  }, [id]);
 
   return (
     <main className='bg-pure_soul custom-scrollbar h-screen overflow-y-auto'>
-      <div className='p-4 max-w-[540px] mx-auto border-x border-slate-500'>
+      <div className='p-4 max-w-[540px] mx-auto border-x border-slate-500 min-h-screen'>
         <h2 className='font-semibold text-xl text-dark_soul'>Post</h2>
         {!tweetDetails ? (
           <div className='flex justify-center'>
@@ -47,9 +51,18 @@ const TweetDetails = () => {
             <TweetCard tweet={tweetDetails} isQuery={false} />
             <h3 className='text-xl font-semibold my-6 text-slate-800'>Replies</h3>
             <div className='flex flex-col gap-4'>
-              {tweetDetails?.replies?.map((reply: Tweet, idx: number) => (
-                <TweetCard key={idx} tweet={reply} isQuery={false} />
-              ))}
+              {tweetDetails?.replies?.length ? (
+                tweetDetails?.replies?.map((reply: Tweet, idx: number) => (
+                  <TweetCard key={idx} tweet={reply} isQuery={false} />
+                ))
+              ) : (
+                <div className='flex items-center flex-col'>
+                  <h3 className='font-medium text-dark_soul mb-6'>
+                    No replies on this tweet
+                  </h3>
+                  <img src='/assets/comment.png' className='w-[150px]' />
+                </div>
+              )}
             </div>
           </section>
         )}

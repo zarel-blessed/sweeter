@@ -61,6 +61,9 @@ const ProfilePage = () => {
     }
   }, [data?.bannerImage]);
 
+  const dummyText =
+    "This is a dummy bio for your profile. If you want to update this bio, click on the edit profile button and write a custom bio.";
+
   return (
     <main className='h-[100vh] overflow-y-auto custom-scrollbar max-w-[580px] mx-auto'>
       <header className='flex justify-between items-center bg-pure_soul py-4 px-6'>
@@ -116,9 +119,7 @@ const ProfilePage = () => {
         </div>
 
         <p className='py-2 px-6 font-medium text-dark_soul text-sm'>
-          {data?.bio !== "" && data?.bio
-            ? data?.bio
-            : "This is a dummy bio for your profile. If you want to update this bio, click on the edit profile button and write a custom bio."}
+          {data?.bio !== "" && data?.bio ? data?.bio : dummyText}
         </p>
 
         <div className='flex gap-8 py-2 px-6'>
