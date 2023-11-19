@@ -40,7 +40,7 @@ export const handleImageUpload = async (image: any) => {
 };
 
 export const updateImage = async (
-  image: Image,
+  image: Image | null,
   user_id: string,
   endpoint: string,
   setSidebarProfile?: React.Dispatch<React.SetStateAction<string>> | null

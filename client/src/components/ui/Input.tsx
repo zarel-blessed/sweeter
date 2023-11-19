@@ -11,24 +11,26 @@ export const SingleLineInput = ({
   Icon,
   value,
   changeHandler,
+  dark = false,
 }: {
   type: string;
   placeholder: string;
   required?: boolean;
   reference?: LegacyRef<HTMLInputElement> | undefined;
   Icon: IconType;
-  value: string;
-  changeHandler: Dispatch<React.SetStateAction<string>>;
+  value: any;
+  changeHandler: Dispatch<React.SetStateAction<any>>;
+  dark?: boolean;
 }) => {
   return (
-    <div className='input-container'>
+    <div className={`input-container ${dark && "bg-dark_soul"}`}>
       <Icon className='text-essence02' />
       <input
         type={type}
         placeholder={placeholder}
         required={required}
         ref={reference}
-        className='input-field'
+        className={`input-field`}
         value={value}
         onChange={(e) => changeHandler(e.target.value)}
       />
@@ -48,7 +50,7 @@ export const MultiLineInput = ({
   changeHandler: Dispatch<React.SetStateAction<string>>;
 }) => {
   return (
-    <div className='max-w-[400px] w-[100vw]'>
+    <div className='max-w-[400px] w-full'>
       <textarea
         placeholder={placeholder}
         required={required}

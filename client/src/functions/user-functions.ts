@@ -21,3 +21,35 @@ export const getUserData = async (id: string | undefined) => {
     showToast("Something went wrong!", "error");
   }
 };
+
+export const updateUser = async (
+  id: string | undefined,
+  name: string,
+  dateOfBirth: Date | string,
+  location: string,
+  bio: string
+) => {
+  const accessToken = localStorage.getItem("accessToken");
+
+  const headers = {
+    "Content-Type": "application/json",
+    "x-auth-token": `Bearer ${accessToken}`,
+  };
+
+  try {
+    await fetcherClient.put(
+      `/user/${id}`,
+      JSON.stringify({
+        name,
+        dateOfBirth,
+        location,
+        bio,
+      }),
+      {
+        headers,
+      }
+    );
+  } catch (error) {
+    showToast("Can't update user", "error");
+  }
+};

@@ -17,8 +17,8 @@ import { login } from "../../../context/slices/AuthSlice.ts";
 const LoginForm = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   useEffect(() => {
     if (usernameRef.current) usernameRef.current.focus();
@@ -53,6 +53,10 @@ const LoginForm = () => {
           name: data.user.name,
           username: data.user.username,
           profilePicture: data.user.profilePicture || "",
+          location: data.user.location || "",
+          dateOfBirth: data.user.dateOfBirth || "",
+          bio: data.user.bio || "",
+          following: data.user.following || [],
         })
       );
 
@@ -65,6 +69,10 @@ const LoginForm = () => {
           name: data.user.name,
           username: data.user.username,
           profilePicture: data.user.profilePicture || "",
+          location: data.user.location || "",
+          dateOfBirth: data.user.dateOfBirth || "",
+          bio: data.user.bio || "",
+          following: data.user.following || [],
         })
       );
 

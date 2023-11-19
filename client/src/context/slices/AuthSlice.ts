@@ -3,11 +3,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface User {
-  id: number;
+  id: string;
   name: string;
   username: string;
   profilePicture: string;
   bannerImage: string;
+  dateOfBirth: Date;
+  location: string;
+  bio: string;
+  following: string[];
 }
 
 interface AuthState {

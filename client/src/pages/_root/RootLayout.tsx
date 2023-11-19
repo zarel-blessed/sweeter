@@ -6,7 +6,7 @@ import { BottomBar, LeftSidebar, RightSidebar } from "../../components";
 import { useSelector } from "react-redux/es/exports";
 import { RootState } from "../../context/store";
 import { useState } from "react";
-import TweetBox from "../../components/ui/TweetBox";
+import TweetBox from "../../components/poppup-box/TweetBox";
 import Overlay from "../../components/Overlay";
 
 const RootLayout = () => {

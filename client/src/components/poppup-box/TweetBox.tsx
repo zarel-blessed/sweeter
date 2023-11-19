@@ -1,7 +1,7 @@
 /** @format */
 
 import { useState } from "react";
-import { MultiLineInput } from "./Input";
+import { MultiLineInput } from "../ui/Input";
 import { useSelector } from "react-redux";
 import { RootState } from "../../context/store";
 import { FaImage, FaPoll, FaSmile } from "react-icons/fa";
@@ -32,7 +32,7 @@ const TweetBox = ({
   });
 
   return (
-    <article className='fixed left-1/2 top-[48%] translate-x-[-50%] translate-y-[-50%] bg-dark_soul p-6 rounded-lg'>
+    <article className='fixed left-1/2 top-[48%] translate-x-[-50%] translate-y-[-50%] bg-dark_soul p-6 rounded-lg w-[440px]'>
       <div className='flex gap-4'>
         <img
           src={auth?.user?.profilePicture || "/assets/profile-fallback.png"}

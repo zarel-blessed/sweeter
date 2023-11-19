@@ -200,10 +200,10 @@ const updateUser = async (req, res) => {
   const { id } = req.params;
 
   // Destructure user data (name, dateOfBirth, location) from the request body
-  const { name, DOB: dateOfBirth, location } = req.body;
+  const { name, dateOfBirth, location, bio } = req.body;
 
   // Check if all required fields are provided
-  if (!verifyFields(name, dateOfBirth, location))
+  if (!verifyFields(name, dateOfBirth, location, bio))
     return res.status(400).json({ message: "All fields are required" });
 
   try {
@@ -215,10 +215,8 @@ const updateUser = async (req, res) => {
       name,
       dateOfBirth,
       location,
+      bio,
     });
-
-    // Save the changes to the user
-    await updatedUser.save();
 
     // Return a success response
     res.json({ success: true });
@@ -245,7 +243,28 @@ const getAllTweets = async (req, res) => {
 
   try {
     // Find all tweets with the specified user ID as the "tweetedBy" field
-    const tweets = await Tweet.find({ tweetedBy: id });
+    const tweets = await Tweet.find({ tweetedBy: id })
+      ?.sort({ createdAt: "desc" })
+      ?.populate({
+        path: "tweetedBy",
+        select: "-password",
+      })
+      ?.populate({
+        path: "replies",
+        populate: {
+          path: "tweetedBy",
+          select: "-password",
+          model: "User",
+        },
+      })
+      ?.populate({
+        path: "likes",
+        select: "-password",
+      })
+      ?.populate({
+        path: "retweetBy",
+        select: "-password",
+      });
 
     // Return the tweets in the response
     return res.json({ tweets });

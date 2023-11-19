@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { fetcherClient } from "../utils";
 import { Tweet } from "../interfaces/interface";
 
-const useFetcherClient = () => {
+const useFetcherClient = (id: string | undefined) => {
   const [data, setData] = useState<Tweet[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -20,20 +20,21 @@ const useFetcherClient = () => {
           "x-auth-token": `Bearer ${accessToken}`,
         };
 
-        const response = await fetcherClient.get("/tweet", {
+        const response = await fetcherClient.get(`/user/${id}/tweets`, {
           headers,
         });
-        setIsLoading(false);
+
         setData(response?.data?.tweets);
       } catch (error) {
         console.log(error);
-        setIsLoading(false);
         setIsError(true);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchTweets();
-  }, []);
+  }, [id]);
 
   return { data, isLoading, isError, setData };
 };

@@ -6,15 +6,17 @@ import { FaLocationDot, FaPencil } from "react-icons/fa6";
 import { useQuery } from "@tanstack/react-query";
 import { getUserData } from "../../../functions/user-functions";
 import { useOutletContext, useParams } from "react-router-dom";
-import { FaCalendar, FaEnvelope } from "react-icons/fa";
+import { FaBaby, FaCalendar, FaEnvelope } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { Image } from "../../../functions/image-functions";
-import ImageBox from "../../../components/ui/ImageBox";
+import ImageBox from "../../../components/poppup-box/ImageBox";
 import Overlay from "../../../components/Overlay";
 import TweetCard from "../../../components/ui/TweetCard";
 import { Tweet } from "../../../interfaces/interface";
 import useFetcherClient from "../../../hooks/useFetcherClient";
 import { ColorRing } from "react-loader-spinner";
+import UpdateBox from "../../../components/poppup-box/UpdateBox";
+import formatDate from "../../../utils/formatDate";
 
 const ProfilePage = () => {
   const { id } = useParams();
@@ -28,17 +30,25 @@ const ProfilePage = () => {
     refetch();
   }, [id]);
 
-  const { data: tweets, isLoading, setData: setTweets } = useFetcherClient();
+  const { data: tweets, isLoading, setData: setTweets } = useFetcherClient(id);
 
   const auth = useSelector((state: RootState) => state.auth);
 
   const [setSidebarProfile]: any = useOutletContext();
 
-  const [profileImage, setProfileImage] = useState<Image>({ preview: "", data: null });
+  const [profileImage, setProfileImage] = useState<Image | null>({
+    preview: "",
+    data: null,
+  });
   const [profileImageBoxToggled, setProfileImageBoxToggled] = useState(false);
 
-  const [bannerImage, setBannerImage] = useState<Image>({ preview: "", data: null });
+  const [bannerImage, setBannerImage] = useState<Image | null>({
+    preview: "",
+    data: null,
+  });
   const [bannerImageBoxToggled, setBannerImageBoxToggled] = useState(false);
+
+  const [updateBoxToggled, setUpdateBoxToggled] = useState(false);
 
   const [backgroundStyle, setBackgroundStyle] = useState({
     backgroundColor: "var(--clr-dark--soul)",
@@ -70,7 +80,11 @@ const ProfilePage = () => {
         <div className='flex flex-col'>
           <span className='leading-[1] font-bold text-dark_soul'>{data?.name}</span>
           <span className='text-sm font-medium text-slate-700'>
-            {tweets?.filter((tweet: Tweet) => tweet?.tweetedBy?._id == data?._id).length}{" "}
+            {
+              tweets?.filter(
+                (tweet: Tweet) => tweet?.tweetedBy?._id == data?._id && !tweet?.parentId
+              ).length
+            }{" "}
             posts
           </span>
         </div>
@@ -107,8 +121,23 @@ const ProfilePage = () => {
             <div className='grid place-items-center border-2 border-essence02 w-[40px] h-[40px] rounded-full'>
               <FaEnvelope className='text-essence02' />
             </div>
+
             {auth?.user?.id === data?._id && (
-              <button className='primary-button px-6'>Edit details</button>
+              <button
+                className='primary-button px-6'
+                onClick={() => setUpdateBoxToggled((prev) => !prev)}
+              >
+                Edit details
+              </button>
+            )}
+
+            {auth?.user?.id !== data?._id && (
+              <button
+                className='primary-button px-6'
+                onClick={() => setUpdateBoxToggled((prev) => !prev)}
+              >
+                {auth?.user?.following?.includes(data?._id) ? "Unfollow" : "Follow"}
+              </button>
             )}
           </div>
         </div>
@@ -121,6 +150,15 @@ const ProfilePage = () => {
         <p className='py-2 px-6 font-medium text-dark_soul text-sm'>
           {data?.bio !== "" && data?.bio ? data?.bio : dummyText}
         </p>
+
+        {data?.dateOfBirth && (
+          <div className='flex gap-2 items-center py-2 px-6'>
+            <FaBaby className='text-slate-700' />
+            <span className='font-medium text-slate-700 text-sm'>
+              {formatDate(data?.dateOfBirth)}
+            </span>
+          </div>
+        )}
 
         <div className='flex gap-8 py-2 px-6'>
           {data?.location && (
@@ -168,7 +206,7 @@ const ProfilePage = () => {
       ) : (
         <div className='px-6 my-6 flex flex-col w-full mx-auto gap-6'>
           {tweets
-            ?.filter((tweet: Tweet) => tweet?.tweetedBy?._id == data?._id)
+            ?.filter((tweet: Tweet) => !tweet.parentId)
             ?.map((tweet: Tweet, idx: number) => (
               <TweetCard key={idx} tweet={tweet} isQuery={false} setTweets={setTweets} />
             ))}
@@ -200,6 +238,10 @@ const ProfilePage = () => {
           setSidebarProfile={null}
         />
       )}
+
+      {updateBoxToggled && <Overlay setIsToggled={setUpdateBoxToggled} />}
+
+      {updateBoxToggled && <UpdateBox setToggle={setUpdateBoxToggled} />}
     </main>
   );
 };

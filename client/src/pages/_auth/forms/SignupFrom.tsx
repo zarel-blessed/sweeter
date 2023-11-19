@@ -19,15 +19,15 @@ const SignupFrom = () => {
 
   const nameRef = useRef<HTMLInputElement>(null);
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState<string>("");
 
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState<string>("");
   const [usernameValidated, setUsernameValidated] = useState(false);
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState<string>("");
   const [emailValidated, setEmailValidated] = useState(false);
 
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState<string>("");
   const [passwordValidated, setPasswordValidated] = useState(false);
 
   useEffect(() => {

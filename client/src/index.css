@@ -43,7 +43,7 @@ img {
   }
 
   .input-field {
-    @apply flex-grow p-3  font-medium  text-sm  text-slate-600 outline-none placeholder:text-xs placeholder:uppercase  placeholder:text-slate-600;
+    @apply flex-grow p-3  font-medium  text-sm  text-slate-600 outline-none placeholder:text-xs placeholder:uppercase  placeholder:text-slate-600 bg-transparent;
   }
 
   .left-sidebar {
@@ -71,6 +71,11 @@ img {
   }
 
   .multiline-input {
-    @apply w-full outline-none bg-[#050505] py-2 px-4 rounded-md text-slate-500 placeholder:text-slate-500 font-medium resize-none h-[140px] border-2 border-slate-800;
+    @apply block w-full mx-auto outline-none bg-[#050505] py-2 px-4 rounded-md text-slate-500 placeholder:text-slate-500 font-medium resize-none h-[140px] border-2 border-slate-800;
   }
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  font-size: 1.15rem;
 }

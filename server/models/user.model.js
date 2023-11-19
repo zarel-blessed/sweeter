@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
     bannerImage: { type: String },
     location: { type: String },
     dateOfBirth: { type: Date },
+    bio: { type: String },
     followers: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
     following: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
   },

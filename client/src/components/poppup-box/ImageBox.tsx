@@ -8,8 +8,8 @@ import {
 import { Image, handleFileSelect, updateImage } from "../../functions/image-functions";
 
 interface Props {
-  image: Image;
-  setImage: React.Dispatch<React.SetStateAction<Image>>;
+  image: Image | null;
+  setImage: React.Dispatch<React.SetStateAction<Image | null>>;
   user_id: string;
   endpoint: string;
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -48,9 +48,9 @@ const ImageBox = ({
           htmlFor='file'
           className='grid place-items-center absolute inset-0 cursor-pointer'
         >
-          {image.preview ? (
+          {image?.preview ? (
             <img
-              src={image.preview}
+              src={image?.preview}
               alt='Click here to upload image!'
               className='w-[90%] h-[230px] object-cover'
             />
@@ -66,7 +66,7 @@ const ImageBox = ({
 
       <button
         className='primary-button w-full px-6 disabled:bg-neutral-600 disabled:border-neutral-600 disabled:cursor-not-allowed'
-        disabled={image.data ? false : true}
+        disabled={image?.data ? false : true}
         onClick={() => {
           updateImageMutation.mutate();
           setImage({ preview: "", data: null });
