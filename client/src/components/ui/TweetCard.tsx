@@ -5,10 +5,10 @@ import { Tweet } from "../../interfaces/interface";
 import { useSelector } from "react-redux";
 import { RootState } from "../../context/store";
 import { fetcherClient, showToast } from "../../utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { deleteTweet } from "../../functions/tweet-functions";
 import { Link, useNavigate } from "react-router-dom";
-import CommentBox from "./CommentBox";
+import CommentBox from "../poppup-box/CommentBox";
 import Overlay from "../Overlay";
 import formatDate from "../../utils/formatDate";
 import { ToastContainer } from "react-toastify";
@@ -71,6 +71,11 @@ const TweetCard = ({
       await fetcherClient.post(`/tweet/${_id}/dislike`, {}, { headers });
     }
   };
+
+  useEffect(() => {
+    setIsLiked(checkLike(tweet.likes, auth?.user?.id));
+    setLikeCount(tweet.likes?.length);
+  }, [tweet]);
 
   const navigate = useNavigate();
 

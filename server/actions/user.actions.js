@@ -37,8 +37,10 @@ const getUserData = async (req, res) => {
         message: "Invalid user ID!",
       });
 
+    const isFollowing = await User.findOne({ _id: id, followers: req._id });
+
     // Return the user data in the response
-    res.json({ user });
+    res.json({ user, isFollowing });
   } catch (error) {
     // Handle specific errors and provide appropriate responses
     if (error.name === "CastError" && error.kind === "ObjectId")
