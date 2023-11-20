@@ -1,24 +1,32 @@
 /** @format */
 
-const topSweeters = [
+const trendings = [
   {
-    name: "Electronic Arts",
-    image: "/assets/profile-01.jpg",
+    category: "Awards x hours ago",
+    hashtag: "2023 Billboard music awards",
+    image: "/assets/billboard.jpeg",
   },
   {
-    name: "Bill Gates",
-    image: "/assets/profile-02.jpg",
+    hashtag: "#EnergyTransition",
+    topic: "TotalEnergies in India",
   },
   {
-    name: "Ellie Misa",
-    image: "/assets/profile-03.jpeg",
+    category: "Trending in India",
+    hashtag: "#MitchellMarsh",
+    topic: "Trending with मिचेल मार्श",
   },
   {
-    name: "Justin Bieber",
-    image: "/assets/profile-04.jpg",
+    category: "Sports · Trending",
+    hashtag: "#MSDhoni",
+    topic: "10.7k posts",
+  },
+  {
+    category: "Unscripted reality · Trending",
+    hashtag: "#Vinusha",
+    topic: "1233 posts",
   },
 ];
 
 export const API_BASE_URL = "http://localhost:4020";
 
-export default topSweeters;
+export default trendings;

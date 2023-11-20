@@ -58,7 +58,8 @@ export const followUnfollow = async (
   id: string | undefined,
   user_id: string,
   isFollowing: boolean,
-  setDisabled: React.Dispatch<React.SetStateAction<boolean>>
+  setDisabled: React.Dispatch<React.SetStateAction<boolean>>,
+  username: string
 ) => {
   setDisabled(true);
   const accessToken = localStorage.getItem("accessToken");
@@ -79,6 +80,8 @@ export const followUnfollow = async (
           headers,
         }
       );
+
+      showToast(`Now you are following ${username}`);
 
       const user = JSON.parse(localStorage.getItem("user") || "{}");
       localStorage.setItem(

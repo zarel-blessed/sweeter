@@ -7,8 +7,9 @@
 @tailwind utilities;
 
 :root {
-  --clr-dark--soul: hsl(0, 0%, 3%);
+  --clr-dark--soul: #010101;
   --clr-pure--soul: hsl(0, 0%, 90%);
+  --clr-custom--gray: hsl(220, 12%, 10%);
 
   --clr-essence--01: hsl(306, 48%, 54%);
   --clr-essence--02: hsl(228, 55%, 54%);
@@ -47,11 +48,11 @@ img {
   }
 
   .left-sidebar {
-    @apply hidden sm:block bg-dark_soul h-screen relative w-[200px] md:w-[280px] xl:w-[360px] border-x-2 border-slate-900;
+    @apply hidden sm:block bg-dark_soul h-screen relative w-[200px] md:w-[320px] border-x-2 border-slate-900;
   }
 
   .left-sidebar-page-link {
-    @apply flex gap-10 items-center justify-center md:justify-start px-4 py-2 rounded-md transition duration-300 hover:sm:bg-neutral-900;
+    @apply flex gap-10 items-center justify-center md:justify-start px-4 py-2 rounded-md transition duration-300 hover:sm:bg-neutral-950/50;
   }
 
   .left-sidebar-profile-container {

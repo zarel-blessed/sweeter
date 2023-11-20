@@ -245,7 +245,7 @@ const getAllTweets = async (req, res) => {
 
   try {
     // Find all tweets with the specified user ID as the "tweetedBy" field
-    const tweets = await Tweet.find({ tweetedBy: id })
+    const tweets = await Tweet.find({ $or: [{ tweetedBy: id }, { retweetBy: req._id }] })
       ?.sort({ createdAt: "desc" })
       ?.populate({
         path: "tweetedBy",

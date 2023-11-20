@@ -52,7 +52,7 @@ const Home = () => {
   }
 
   return (
-    <main className='flex justify-center mt-24 px-6 overflow-y-auto h-[78%] sm:h-[86%] custom-scrollbar mb-12'>
+    <main className='flex justify-center py-8 px-6 overflow-y-auto h-[100lvh] custom-scrollbar mb-12'>
       {isLoading ? (
         <div className='flex justify-center'>
           <ColorRing

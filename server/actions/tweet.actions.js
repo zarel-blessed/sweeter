@@ -263,7 +263,7 @@ const getTweetDetails = async (req, res) => {
   } catch (error) {
     // Handle specific error cases, such as invalid Tweet ID format
     if (error.name === "CastError" && error.type === "ObjectId") {
-      res.status(400).json({ message: "Invalid tweet ID format!" });
+      return res.status(400).json({ message: "Invalid tweet ID format!" });
     }
 
     // Return an internal server error message for other error cases
@@ -309,7 +309,7 @@ const getAllTweets = async (req, res) => {
   } catch (error) {
     // Handle specific error cases, such as invalid Tweet ID format
     if (error.name === "CastError" && error.type === "ObjectId") {
-      res.status(400).json({ message: "Invalid tweet ID format!" });
+      return res.status(400).json({ message: "Invalid tweet ID format!" });
     }
 
     // Return an internal server error message for other error cases
@@ -347,7 +347,7 @@ const deleteTweet = async (req, res) => {
   } catch (error) {
     // Handle specific error cases, such as invalid Tweet ID format
     if (error.name === "CastError" && error.type === "ObjectId") {
-      res.status(400).json({ message: "Invalid tweet ID format!" });
+      return res.status(400).json({ message: "Invalid tweet ID format!" });
     }
 
     // Return an internal server error message for other error cases
@@ -368,24 +368,26 @@ const retweetTweet = async (req, res) => {
 
   try {
     // Find the tweet by its ID
-    const tweet = await Tweet.findById(id);
+    const alreadyRetweeted = await Tweet.findOne({ _id: id, retweetBy: req._id });
 
     // Check if the user has already retweeted the tweet
-    if (tweet.retweetBy.includes(req._id))
-      res.status(409).json({
+    if (alreadyRetweeted)
+      return res.status(409).json({
         message: "User has already reposted this tweet!",
       });
 
     // Add the User ID to the retweetBy array and save the tweet
-    tweet.retweetBy.push(req._id);
-    await tweet.save();
+    await Tweet.findByIdAndUpdate(id, {
+      $push: { retweetBy: req._id },
+    });
 
     // Return success response
     res.json({ message: "Tweet retweeted successfully!" });
   } catch (error) {
+    console.log(error);
     // Handle specific error cases, such as invalid Tweet ID format
     if (error.name === "CastError" && error.type === "ObjectId") {
-      res.status(400).json({ message: "Invalid tweet ID format!" });
+      return res.status(400).json({ message: "Invalid tweet ID format!" });
     }
 
     // Return an internal server error message for other error cases

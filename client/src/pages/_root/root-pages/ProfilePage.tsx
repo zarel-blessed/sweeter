@@ -75,7 +75,13 @@ const ProfilePage = () => {
 
   const updateFollowingMutate = useMutation({
     mutationFn: () =>
-      followUnfollow(auth?.user?.id, data?.user?._id, data?.isFollowing, setDisabled),
+      followUnfollow(
+        auth?.user?.id,
+        data?.user?._id,
+        data?.isFollowing,
+        setDisabled,
+        data?.user?.username
+      ),
     onSuccess: () => QueryClient.invalidateQueries(["user"] as InvalidateQueryFilters),
   });
 
@@ -84,10 +90,10 @@ const ProfilePage = () => {
 
   return (
     <main className='h-[100vh] overflow-y-auto custom-scrollbar max-w-[580px] mx-auto'>
-      <header className='flex justify-between items-center bg-pure_soul py-4 px-6'>
+      <header className='flex justify-between items-center py-4 px-6'>
         <div className='flex flex-col'>
-          <span className='leading-[1] font-bold text-dark_soul'>{data?.user?.name}</span>
-          <span className='text-sm font-medium text-slate-700'>
+          <span className='leading-[1] font-bold text-slate-300'>{data?.user?.name}</span>
+          <span className='text-sm font-medium text-slate-400'>
             {
               tweets?.filter(
                 (tweet: Tweet) =>
@@ -107,15 +113,15 @@ const ProfilePage = () => {
                 ? data?.user?.profilePicture
                 : "/assets/profile-fallback.png"
             }
-            className='absolute left-[20px] top-[100px] w-[120px] h-[120px] rounded-full border-4 border-pure_soul object-cover'
+            className='absolute left-[20px] top-[100px] w-[120px] h-[120px] rounded-full border-4 border-dark_soul object-cover'
           />
 
           {auth?.user?.id === data?.user?._id && (
             <div
-              className='grid place-items-center absolute left-[20px] top-[100px] w-[120px] h-[120px] rounded-full bg-transparent hover:bg-neutral-200/30 group cursor-pointer'
+              className='grid place-items-center absolute left-[20px] top-[100px] w-[120px] h-[120px] rounded-full bg-transparent hover:bg-neutral-900/70 group cursor-pointer'
               onClick={() => setProfileImageBoxToggled((prev) => !prev)}
             >
-              <FaPencil className='hidden group-hover:inline-block' />
+              <FaPencil className='hidden text-slate-200 group-hover:inline-block' />
             </div>
           )}
 
@@ -158,22 +164,22 @@ const ProfilePage = () => {
         </div>
 
         <div className='flex flex-col mt-8 py-4 px-6'>
-          <span className='leading-[1.1] font-bold text-dark_soul'>
+          <span className='leading-[1.1] font-bold text-pure_soul'>
             {data?.user?.name}
           </span>
-          <span className='text-sm font-medium text-slate-700'>
+          <span className='text-sm font-medium text-slate-500'>
             @{data?.user?.username}
           </span>
         </div>
 
-        <p className='py-2 px-6 font-semibold text-slate-800 text-sm'>
+        <p className='py-2 px-6 font-medium text-slate-200 text-sm'>
           {data?.user?.bio !== "" && data?.user?.bio ? data?.user?.bio : dummyText}
         </p>
 
         {data?.user?.dateOfBirth && (
           <div className='flex gap-2 items-center py-2 px-6'>
-            <FaBaby className='text-slate-700' />
-            <span className='font-medium text-slate-700 text-sm'>
+            <FaBaby className='text-slate-500' />
+            <span className='text-slate-500 text-sm'>
               {formatDate(data?.user?.dateOfBirth)}
             </span>
           </div>
@@ -182,16 +188,14 @@ const ProfilePage = () => {
         <div className='flex gap-8 py-2 px-6'>
           {data?.user?.location && (
             <div className='flex gap-2 items-center'>
-              <FaLocationDot className='text-slate-700' />
-              <span className='font-medium text-slate-700 text-sm'>
-                {data?.user?.location}
-              </span>
+              <FaLocationDot className='text-slate-500' />
+              <span className='text-slate-500 text-sm'>{data?.user?.location}</span>
             </div>
           )}
 
           <div className='flex gap-2 items-center'>
-            <FaCalendar className='text-slate-700' />
-            <span className='font-medium text-slate-700 text-sm'>
+            <FaCalendar className='text-slate-500' />
+            <span className='text-slate-500 text-sm'>
               Joined {data?.user?.createdAt.slice(8, 10)}{" "}
               {data?.user?.createdAt.slice(0, 4)}
             </span>
@@ -200,22 +204,22 @@ const ProfilePage = () => {
 
         <div className='flex gap-8 py-4 px-6'>
           <span>
-            <span className='font-bold text-dark_soul'>
+            <span className='font-bold text-pure_soul'>
               {data?.user?.following?.length}
             </span>{" "}
-            <span className='text-slate-800 font-medium'>following</span>
+            <span className='text-slate-400 font-medium'>following</span>
           </span>
 
           <span>
-            <span className='font-bold text-dark_soul'>
+            <span className='font-bold text-pure_soul'>
               {data?.user?.followers?.length}
             </span>{" "}
-            <span className='text-slate-800 font-medium'>followers</span>
+            <span className='text-slate-400 font-medium'>followers</span>
           </span>
         </div>
       </div>
 
-      <h3 className='px-6 pt-4 pb-2 text-xl font-semibold'>Tweets</h3>
+      <h3 className='px-6 pt-4 pb-2 text-xl font-semibold text-slate-300'>Tweets</h3>
 
       {isLoading ? (
         <div className='flex justify-center'>

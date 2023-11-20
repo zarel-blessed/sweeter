@@ -129,3 +129,30 @@ export const getUserTweets = async () => {
     showToast("Can't get user's Tweet!", "error", 3000);
   }
 };
+
+export const retweetTweet = async (id: Tweet) => {
+  try {
+    const accessToken = localStorage.getItem("accessToken");
+
+    const headers = {
+      "Content-Type": "application/json",
+      "x-auth-token": `Bearer ${accessToken}`,
+    };
+
+    await fetcherClient.post(
+      `/tweet/${id}/retweet`,
+      {},
+      {
+        headers,
+      }
+    );
+
+    showToast("Retweeted successfully!");
+  } catch (error: any) {
+    if (error.response && error.response.status === 409) {
+      return showToast("Already retweeted this tweet!", "error", 2000);
+    }
+
+    showToast("Can't retweet that", "error");
+  }
+};

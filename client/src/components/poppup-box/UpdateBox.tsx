@@ -22,7 +22,7 @@ const UpdateBox = ({
   const QueryClient = useQueryClient();
 
   const [name, setName] = useState(user?.name || "");
-  const [DOB, setDOB] = useState<Date | string>(user?.dateOfBirth || "");
+  const [DOB, setDOB] = useState<Date | string>("2000-01-01");
   const [location, setLocation] = useState(user?.location || "");
   const [bio, setBio] = useState(user?.bio || "");
 
@@ -49,7 +49,7 @@ const UpdateBox = ({
           placeholder='Date of birth'
           required={true}
           Icon={FaCalendar}
-          value='2000-01-01'
+          value={DOB}
           changeHandler={setDOB}
           dark={true}
         />
