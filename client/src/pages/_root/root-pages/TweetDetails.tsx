@@ -31,9 +31,9 @@ const TweetDetails = () => {
   }, [id]);
 
   return (
-    <main className='bg-pure_soul custom-scrollbar h-screen overflow-y-auto'>
-      <div className='p-4 max-w-[540px] mx-auto border-x border-slate-500 min-h-screen'>
-        <h2 className='font-semibold text-xl text-dark_soul'>Post</h2>
+    <main className='bg-dark_soul custom-scrollbar h-screen overflow-y-auto'>
+      <div className='p-4 max-w-[540px] mx-auto min-h-screen'>
+        <h2 className='font-semibold text-xl text-pure_soul'>Post</h2>
         {!tweetDetails ? (
           <div className='flex justify-center'>
             <ColorRing
@@ -49,7 +49,7 @@ const TweetDetails = () => {
         ) : (
           <section className='mt-4'>
             <TweetCard tweet={tweetDetails} isQuery={false} />
-            <h3 className='text-xl font-semibold my-6 text-slate-800'>Replies</h3>
+            <h3 className='text-xl font-semibold my-6 text-slate-400'>Replies</h3>
             <div className='flex flex-col gap-4'>
               {tweetDetails?.replies?.length ? (
                 tweetDetails?.replies?.map((reply: Tweet, idx: number) => (

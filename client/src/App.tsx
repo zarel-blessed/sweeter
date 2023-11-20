@@ -14,8 +14,9 @@ import SignupFrom from "./pages/_auth/forms/SignupFrom";
 import LoginFrom from "./pages/_auth/forms/LoginForm";
 
 // Private pages
-import { Home, NewsPage, ProfilePage } from "./pages/_root/root-pages";
+import { Home, ProfilePage } from "./pages/_root/root-pages";
 import TweetDetails from "./pages/_root/root-pages/TweetDetails";
+import FourOFour from "./pages/FourOFour";
 
 const App = () => {
   return (
@@ -31,8 +32,9 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path='/profile/:id' element={<ProfilePage />} />
         <Route path='/tweet/:id' element={<TweetDetails />} />
-        <Route path='/news' element={<NewsPage />} />
       </Route>
+
+      <Route path='/*' element={<FourOFour />} />
     </Routes>
   );
 };

@@ -44,12 +44,14 @@ const TweetBox = ({
           changeHandler={setContent}
         />
       </div>
+
       {image?.preview && (
         <img
           src={image.preview}
-          className='ml-14 my-2 h-[200px] object-cover rounded-md'
+          className='max-w-[85%] h-[200px] block ml-14 my-2 object-cover rounded-md'
         />
       )}
+
       <div className='flex justify-between items-center mt-6'>
         <div className='flex gap-4'>
           <input

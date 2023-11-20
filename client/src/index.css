@@ -7,7 +7,7 @@
 @tailwind utilities;
 
 :root {
-  --clr-dark--soul: #010101;
+  --clr-dark--soul: hsl(0, 0%, 0%);
   --clr-pure--soul: hsl(0, 0%, 90%);
   --clr-custom--gray: hsl(220, 12%, 10%);
 
