@@ -9,7 +9,7 @@ import {
   useQuery,
   InvalidateQueryFilters,
 } from "@tanstack/react-query";
-import { followUser, getUserData } from "../../../functions/user-functions";
+import { followUnfollow, getUserData } from "../../../functions/user-functions";
 import { useOutletContext, useParams } from "react-router-dom";
 import { FaBaby, FaCalendar, FaEnvelope } from "react-icons/fa";
 import { useState, useEffect } from "react";
@@ -50,9 +50,8 @@ const ProfilePage = () => {
     data: null,
   });
   const [bannerImageBoxToggled, setBannerImageBoxToggled] = useState(false);
-
   const [updateBoxToggled, setUpdateBoxToggled] = useState(false);
-
+  const [disabled, setDisabled] = useState(false);
   const [backgroundStyle, setBackgroundStyle] = useState({
     backgroundColor: "var(--clr-dark--soul)",
     backgroundPosition: "center",
@@ -75,7 +74,8 @@ const ProfilePage = () => {
   }, [data?.user?.bannerImage]);
 
   const updateFollowingMutate = useMutation({
-    mutationFn: () => followUser(auth?.user?.id, data?.user?._id),
+    mutationFn: () =>
+      followUnfollow(auth?.user?.id, data?.user?._id, data?.isFollowing, setDisabled),
     onSuccess: () => QueryClient.invalidateQueries(["user"] as InvalidateQueryFilters),
   });
 
@@ -144,7 +144,8 @@ const ProfilePage = () => {
 
             {data && auth?.user?.id !== data?.user?._id && (
               <button
-                className='primary-button px-6'
+                className='primary-button px-6 disabled:bg-slate-600 disabled:border-slate-600'
+                disabled={disabled}
                 onClick={() => {
                   updateFollowingMutate.mutate();
                   dispatch(login(JSON.parse(localStorage.getItem("user") || "{}")));

@@ -54,7 +54,13 @@ export const updateUser = async (
   }
 };
 
-export const followUser = async (id: string | undefined, user_id: string) => {
+export const followUnfollow = async (
+  id: string | undefined,
+  user_id: string,
+  isFollowing: boolean,
+  setDisabled: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  setDisabled(true);
   const accessToken = localStorage.getItem("accessToken");
 
   const headers = {
@@ -63,25 +69,50 @@ export const followUser = async (id: string | undefined, user_id: string) => {
   };
 
   try {
-    await fetcherClient.post(
-      `/user/${id}/follow`,
-      JSON.stringify({
-        user_id,
-      }),
-      {
-        headers,
-      }
-    );
+    if (!isFollowing) {
+      await fetcherClient.post(
+        `/user/${id}/follow`,
+        JSON.stringify({
+          user_id,
+        }),
+        {
+          headers,
+        }
+      );
 
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        ...user,
-        following: [...user.following, user_id],
-      })
-    );
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...user,
+          following: [...user.following, user_id],
+        })
+      );
+    } else {
+      await fetcherClient.post(
+        `/user/${id}/unfollow`,
+        JSON.stringify({
+          user_id,
+        }),
+        {
+          headers,
+        }
+      );
+
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...user,
+          following: [
+            ...user.following.filter((follower: any) => follower._id != user_id),
+          ],
+        })
+      );
+    }
   } catch (error) {
     showToast("Can't follow", "error");
+  } finally {
+    setDisabled(false);
   }
 };
