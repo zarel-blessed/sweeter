@@ -14,8 +14,7 @@ import SignupFrom from "./pages/_auth/forms/SignupFrom";
 import LoginFrom from "./pages/_auth/forms/LoginForm";
 
 // Private pages
-import { Home, ProfilePage } from "./pages/_root/root-pages";
-import TweetDetails from "./pages/_root/root-pages/TweetDetails";
+import { TweetDetails, Home, ProfilePage } from "./pages/_root/root-pages";
 import FourOFour from "./pages/FourOFour";
 
 const App = () => {

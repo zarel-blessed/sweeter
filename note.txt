@@ -1,0 +1,90 @@
+Hello, Internshala team! My name is Shaheer (Zarel) Shaikh, and this is a detailed note about SWEETER which is a TWITTER clone project made using the MERN stack... and again I enjoyed the process and can't thank you all enough for giving us this challenging project to build, because after building this, I am feeling fully motivated, confident and ready to smash those technical interviews. Sorry, if I made any gramatical error, and I want you to please read following data to get more insights about this project.
+
+<- * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - ->
+
+* Tech Stack ->
+
+    * Client-side ->
+
+        1. Language - TypeScript
+
+        2. Libraries/Packages: 
+            React            - For faster front-end development
+            TanstackQuery    - For data fetching and caching
+            Redux-toolkit    - For gloabal state managemnet
+            React-router-dom - For routing, layout and creating protected routes on the client-side
+
+        3. Styling - Tailwind CSS
+    
+    * Server-side ->
+
+        1. Language - JavaScript (Node.js)
+
+        2. Libraries/Packages:
+            Express        - For faster API development
+            Bcrypt         - For hashing and validating passwords
+            JSON Web Token - For verifying access and creating protected routes on the server-side
+            Multer         - For uploading images on the server
+
+        3. Database/ORM:
+            MongoDB Atlas - For storing the data globally
+            Mongoose      - For easier data access and interactions
+
+<- * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - ->
+
+* Features ->
+
+    1. User can register or login
+        * Both frontend and backend validation have been added
+        * User can't register with the same email or username that already exists in the Database
+        * User can't leave black any input field
+        * After logging in, user will have an access token which he can use to access private routes 
+        * If the access token is not present or has been deleted by the user, 
+          the app will redirect the user to login page 
+
+    2. User can browse all tweets that have been uploaded by others and himself/herself
+
+    3. User can create a tweet (with an image or without an image)
+
+    4. User can like tweets (Both his/her or other's)
+
+    5. User can comment on a perticular tweet
+
+    6. User can repost a perticular tweet
+        * User cannot retweet the same tweet twice
+
+    7. User can follow/unfollow other user
+
+    8. User can edit his/her profile data, including...
+        1. Profile picture
+        2. Banner image (Extra feature)
+        3. Name 
+        4. Date of birth
+        5. Location 
+        6. Bio (Extra feature)
+
+    9. If the content of a tweet contains words that starts with @ sign, 
+       that word will get highlighted by pink (Extra feature) 
+
+    10. On mobile screens, the left and right sidebars will disappear and 
+        topbar and bottombar will appear to give a native android/IOS app feel (Responsive design)
+
+<- * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - ->
+
+* Ending note ->
+
+    * Note that some elements of this app are dummy, just to provide that social media app look and feel, I hope this note was not boring (I am writting this at 02:17 AM) and you found all the text helpful. Feel free to write some suggestions on how I can further improve my skills and myself (and my English too)
+
+    * Dummy features includes:
+        * What's happening (Trending tab)
+        * Add polls and emojis while creating a tweet 
+          (Although you can press WINDOW + PERIOD for emojis if your PC supports it)
+        * News, Notifications and Bookmark tabs
+
+<- * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - ->
+
+Thank you for reading this far,
+Zarel (PGC FSD student)
+
+    
+    

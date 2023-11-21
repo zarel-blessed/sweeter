@@ -32,7 +32,7 @@ const UpdateBox = ({
   });
 
   return (
-    <article className='fixed left-1/2 top-[45%] translate-x-[-50%] translate-y-[-50%] w-[400px] p-4 bg-dark_soul rounded-md'>
+    <article className='fixed left-1/2 top-[45%] translate-x-[-50%] translate-y-[-50%] w-[320px] sm:w-[400px] p-4 bg-dark_soul rounded-md'>
       <div className='flex flex-col gap-6 items-center'>
         <SingleLineInput
           type='text'
@@ -72,7 +72,7 @@ const UpdateBox = ({
         />
 
         <button
-          className='primary-button'
+          className='primary-button px-6 w-full'
           onClick={() => {
             updateUserMutation.mutate();
             setToggle(false);

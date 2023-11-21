@@ -1,7 +1,7 @@
 /** @format */
 
 import { Navigate, Outlet } from "react-router-dom";
-import { BottomBar, LeftSidebar, RightSidebar } from "../../components";
+import { TopBar, BottomBar, LeftSidebar, RightSidebar } from "../../components";
 
 import { useSelector } from "react-redux/es/exports";
 import { RootState } from "../../context/store";
@@ -19,12 +19,18 @@ const RootLayout = () => {
     <main className='flex justify-center bg-dark_soul h-screen overflow-hidden'>
       {auth.isAuth ? (
         <main className='flex w-[100%] max-w-[1280px]'>
+          <TopBar />
+
           <LeftSidebar sidebarProfile={sidebarProfile} setIsToggled={setIsToggled} />
-          <section className='relative bg-dark_soul h-screen flex-1'>
+
+          <section className='relative bg-dark_soul h-[100lvh] flex-1'>
             <Outlet context={[setSidebarProfile]} />
           </section>
+
           <RightSidebar />
-          <BottomBar />
+
+          <BottomBar setIsToggled={setIsToggled} />
+
           {isToggled && <Overlay setIsToggled={setIsToggled} />}
           {isToggled && <TweetBox setIsToggled={setIsToggled} />}
         </main>

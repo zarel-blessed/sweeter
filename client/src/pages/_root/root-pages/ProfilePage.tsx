@@ -1,7 +1,6 @@
 /** @format */
 
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../context/store";
 import { FaLocationDot, FaPencil } from "react-icons/fa6";
 import {
   useQueryClient,
@@ -9,10 +8,12 @@ import {
   useQuery,
   InvalidateQueryFilters,
 } from "@tanstack/react-query";
-import { followUnfollow, getUserData } from "../../../functions/user-functions";
 import { useOutletContext, useParams } from "react-router-dom";
 import { FaBaby, FaCalendar, FaEnvelope } from "react-icons/fa";
 import { useState, useEffect } from "react";
+/* ----------------------------------------------------------------------------- */
+import { followUnfollow, getUserData } from "../../../functions/user-functions";
+import { RootState } from "../../../context/store";
 import { Image } from "../../../functions/image-functions";
 import ImageBox from "../../../components/poppup-box/ImageBox";
 import Overlay from "../../../components/Overlay";
@@ -26,32 +27,23 @@ import { login } from "../../../context/slices/AuthSlice";
 
 const ProfilePage = () => {
   const { id } = useParams();
-  const QueryClient = useQueryClient();
+  const QueryClient = useQueryClient(); // QueryClient will invalidate all the stale data
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
 
-  const { data } = useQuery({
-    queryKey: ["user", id],
-    queryFn: () => getUserData(id),
+  // Initializing the states
+  const [bannerImageBoxToggled, setBannerImageBoxToggled] = useState(false);
+  const [updateBoxToggled, setUpdateBoxToggled] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const [bannerImage, setBannerImage] = useState<Image | null>({
+    preview: "",
+    data: null,
   });
-
-  const { data: tweets, isLoading, setData: setTweets } = useFetcherClient(id);
-
-  const [setSidebarProfile]: any = useOutletContext();
-
   const [profileImage, setProfileImage] = useState<Image | null>({
     preview: "",
     data: null,
   });
   const [profileImageBoxToggled, setProfileImageBoxToggled] = useState(false);
-
-  const [bannerImage, setBannerImage] = useState<Image | null>({
-    preview: "",
-    data: null,
-  });
-  const [bannerImageBoxToggled, setBannerImageBoxToggled] = useState(false);
-  const [updateBoxToggled, setUpdateBoxToggled] = useState(false);
-  const [disabled, setDisabled] = useState(false);
   const [backgroundStyle, setBackgroundStyle] = useState({
     backgroundColor: "var(--clr-dark--soul)",
     backgroundPosition: "center",
@@ -59,6 +51,17 @@ const ProfilePage = () => {
     backgroundImage: "",
   });
 
+  // Fetching the data using the getUserData() function
+  const { data } = useQuery({
+    queryKey: ["user", id],
+    queryFn: () => getUserData(id),
+  });
+
+  // Fetching the tweets using the useFetcherClient() custom hook
+  const { data: tweets, isLoading, setData: setTweets } = useFetcherClient(id);
+  const [setSidebarProfile]: any = useOutletContext();
+
+  // Updating banner image on each render
   useEffect(() => {
     if (data?.user?.bannerImage) {
       setBackgroundStyle((prevStyle) => ({
@@ -73,6 +76,7 @@ const ProfilePage = () => {
     }
   }, [data?.user?.bannerImage]);
 
+  // Create a mutation to update the follow/unfollow data
   const updateFollowingMutate = useMutation({
     mutationFn: () =>
       followUnfollow(
@@ -82,14 +86,16 @@ const ProfilePage = () => {
         setDisabled,
         data?.user?.username
       ),
+    // Invalidating on success
     onSuccess: () => QueryClient.invalidateQueries(["user"] as InvalidateQueryFilters),
   });
 
+  // A dummy bio for new profiles
   const dummyText =
     "This is a dummy bio for your profile. If you want to update this bio, click on the edit profile button and write a custom bio.";
 
   return (
-    <main className='h-[100vh] overflow-y-auto custom-scrollbar max-w-[580px] mx-auto'>
+    <main className='h-[100vh] overflow-y-auto custom-scrollbar max-w-[580px] mx-auto py-[70px] sm:py-0'>
       <header className='flex justify-between items-center py-4 px-6'>
         <div className='flex flex-col'>
           <span className='leading-[1] font-bold text-slate-300'>{data?.user?.name}</span>

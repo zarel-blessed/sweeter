@@ -14,7 +14,7 @@ const BottomBar = ({
   const { pathname } = useLocation();
 
   return (
-    <section className='sm:hidden fixed bottom-0 left-0 right-0 bg-dark_soul'>
+    <section className='sm:hidden fixed bottom-0 left-0 right-0 bg-zinc-950/80 z-10 backdrop-blur-[2px]'>
       <nav>
         <ul className='flex items-center justify-between py-3 px-4'>
           <li>

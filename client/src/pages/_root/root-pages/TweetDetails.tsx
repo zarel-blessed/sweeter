@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetcherClient } from "../../../utils";
 import { ColorRing } from "react-loader-spinner";
+/* ------------------------------------------------------- */
+import { fetcherClient } from "../../../utils";
 import TweetCard from "../../../components/ui/TweetCard";
 import { Tweet } from "../../../interfaces/interface";
 
@@ -31,7 +32,7 @@ const TweetDetails = () => {
   }, [id]);
 
   return (
-    <main className='bg-dark_soul custom-scrollbar h-screen overflow-y-auto'>
+    <main className='bg-dark_soul custom-scrollbar h-screen overflow-y-auto py-[75px] sm:py-0'>
       <div className='p-4 max-w-[540px] mx-auto min-h-screen'>
         <h2 className='font-semibold text-xl text-pure_soul'>Post</h2>
         {!tweetDetails ? (

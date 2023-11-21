@@ -102,8 +102,9 @@ const TweetCard = ({
           <FaRetweet />
           <span>
             Retweeted by {tweet.retweetBy[0].username}{" "}
-            {tweet.retweetBy.length > 1 && `and ${tweet.retweetBy.length - 1} `}
-            {tweet.retweetBy.length - 1 === 1 ? "other" : "others"}
+            {tweet.retweetBy.length === 2
+              ? `and 1 other`
+              : tweet.retweetBy.length > 2 && `and ${tweet.retweetBy.length - 1} others`}
           </span>
         </div>
       )}

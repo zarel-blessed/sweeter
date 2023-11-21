@@ -32,11 +32,11 @@ const TweetBox = ({
   });
 
   return (
-    <article className='fixed left-1/2 top-[48%] translate-x-[-50%] translate-y-[-50%] bg-dark_soul p-6 rounded-lg w-[440px]'>
+    <article className='fixed left-1/2 top-[48%] translate-x-[-50%] translate-y-[-50%] bg-dark_soul p-6 rounded-lg w-[300px] sm:w-[440px]'>
       <div className='flex gap-4'>
         <img
           src={auth?.user?.profilePicture || "/assets/profile-fallback.png"}
-          className='w-[40px] h-[40px] rounded-full object-cover'
+          className='hidden sm:inline-block w-[40px] h-[40px] rounded-full object-cover'
         />
         <MultiLineInput
           placeholder="What's happening?"
